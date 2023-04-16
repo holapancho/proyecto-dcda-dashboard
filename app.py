@@ -6,23 +6,20 @@ from fuentes import DatosConcurso
 
 concurso = DatosConcurso()
 
-df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/gapminder_unfiltered.csv')
+# temas disponibles en https://dash-bootstrap-components.opensource.faculty.ai/docs/themes/#available-themes
+app = Dash(external_stylesheets=[dbc.themes.DARKLY])
 
-app = Dash(__name__)
-
-app.layout = html.Div([
-    html.H1(children='Proyecto Dashboard App', style={'textAlign':'center'}),
-    dcc.Dropdown(df.country.unique(), 'Canada', id='dropdown-selection'),
-    dcc.Graph(id='graph-content')
-])
-
-@callback(
-    Output('graph-content', 'figure'),
-    Input('dropdown-selection', 'value')
+app.layout = dbc.Container(
+    children=[
+        # Primer Registro - cabecera
+        dbc.Row(
+            [
+                dbc.Col(html.Img(src='assets/dataset-cover.png',
+                        style={'height': '25%'}), md=1)
+            ])
+    ],
+    fluid=True
 )
-def update_graph(value):
-    dff = df[df.country==value]
-    return px.line(dff, x='year', y='pop')
 
 if __name__ == '__main__':
     app.run_server(debug=True)
