@@ -1,10 +1,34 @@
 import pandas as pd
+from utilitarios import convertirDataframeColumnaObjectAFloat, convertirDataframeColumnaObjectAInt, convertirDataframeColumnaObjectAString
 
 class DatosConcurso:
   def __init__(self):
     self.contest_data = pd.read_csv("./csv_fuentes/contest_data.csv")
     self.country_data = pd.read_csv("./csv_fuentes/country_data.csv")
     self.song_data = pd.read_csv("./csv_fuentes/song_data.csv")
+
+    #sanitiza song_data
+    convertirDataframeColumnaObjectAInt(self.song_data, 'final_draw_position')
+    convertirDataframeColumnaObjectAInt(self.song_data, 'semi_draw_position')
+    convertirDataframeColumnaObjectAString(self.song_data, 'country')
+    convertirDataframeColumnaObjectAString(self.song_data, 'artist_name')
+    convertirDataframeColumnaObjectAString(self.song_data, 'song_name')
+    convertirDataframeColumnaObjectAString(self.song_data, 'language')
+    convertirDataframeColumnaObjectAString(self.song_data, 'style')
+    convertirDataframeColumnaObjectAString(self.song_data, 'race')
+    convertirDataframeColumnaObjectAInt(self.song_data, 'energy')
+    convertirDataframeColumnaObjectAInt(self.song_data, 'danceability')
+    convertirDataframeColumnaObjectAInt(self.song_data, 'happiness')
+    convertirDataframeColumnaObjectAString(self.song_data, 'loudness')
+    convertirDataframeColumnaObjectAInt(self.song_data, 'acousticness')
+    convertirDataframeColumnaObjectAInt(self.song_data, 'instrumentalness')
+    convertirDataframeColumnaObjectAInt(self.song_data, 'liveness')
+    convertirDataframeColumnaObjectAString(self.song_data, 'speechiness')
+    convertirDataframeColumnaObjectAInt(self.song_data, 'BPM')
+    convertirDataframeColumnaObjectAFloat(self.song_data, 'final_jury_votes')
+    self.song_data.drop(['gender','age','selection'], axis=1,  inplace=True)
+
+    #Sub dataframes
     self.datos_resultados_finales = DatosResultadosFinales()
     self.datos_encuestas = DatosEncuestas()
 
