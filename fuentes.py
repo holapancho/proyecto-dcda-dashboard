@@ -26,6 +26,12 @@ class DatosConcurso:
     convertirDataframeColumnaObjectAString(self.song_data, 'speechiness')
     convertirDataframeColumnaObjectAInt(self.song_data, 'BPM')
     convertirDataframeColumnaObjectAFloat(self.song_data, 'final_jury_votes')
+    convertirDataframeColumnaObjectAFloat(self.song_data, 'final_place')
+    convertirDataframeColumnaObjectAFloat(self.song_data, 'final_total_points')
+    convertirDataframeColumnaObjectAFloat(self.song_data, 'semi_place')
+    convertirDataframeColumnaObjectAFloat(self.song_data, 'semi_televote_points')
+    convertirDataframeColumnaObjectAFloat(self.song_data, 'semi_jury_points')
+    convertirDataframeColumnaObjectAFloat(self.song_data, 'semi_total_points')
     self.song_data.drop(['gender','age','selection'], axis=1,  inplace=True)
 
     #Sub dataframes
