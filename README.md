@@ -17,5 +17,3 @@ Se sanitizó el archivo <code>song_data.csv</code> para trabajar con Pandas en U
 ## Ejecutar
 
 *  Correr archivo <code>app.py</code>
-
-Saludos.
