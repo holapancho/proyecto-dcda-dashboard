@@ -6,6 +6,9 @@ from diagramas import Plots
 
 plots = Plots()
 
+anios_string = ['2022', '2021', '2019', '2018', '2017', '2016']
+anio_por_defecto = '2022'
+
 # temas disponibles en https://dash-bootstrap-components.opensource.faculty.ai/docs/themes/#available-themes
 app = Dash(external_stylesheets=[dbc.themes.SPACELAB])
 
@@ -15,17 +18,21 @@ app.layout = dbc.Container(
         dbc.Row(
             [
                 dbc.Col(html.Img(src='assets/dataset-cover.png',
-                        style={'height': '25%'}), md=1),
+                        style={'height': '100px'}), md=1),
                 dbc.Col(md=9),
-                dbc.Col(dcc.Dropdown(['2022', '2021', '2020'],
-                                     '2022',
+                dbc.Col(dcc.Dropdown(anios_string,
+                                     anio_por_defecto,
                                      searchable=False,
                                      id='demo-dropdown'),
                         md=2)
             ]),
         # Primer Registro - cabecera
         dbc.Row(
-            dcc.Graph(id='grafico-1'))
+            [
+                dbc.Col(dcc.Graph(id='grafico-1'), md=6),
+                dbc.Col(md=6)
+            ]
+        )
     ],
     fluid=True
 )
@@ -37,8 +44,8 @@ app.layout = dbc.Container(
 )
 def actualiza_grafico_por_anio(value):
     if value == 'None':
-        value = '2022'
-    return plots.obtener_plot_por_anio(value)
+        value = anio_por_defecto
+    return plots.obtener_pie_plot_por_anio(value)
 
 
 if __name__ == '__main__':

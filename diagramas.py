@@ -7,8 +7,7 @@ class Plots:
     def __init__(self):
         self.datos_concurso = DatosConcurso()
 
-    def obtener_plot_por_anio(self, anio_string):
-        print(anio_string)
+    def obtener_pie_plot_por_anio(self, anio_string):
         anio = int(anio_string)
         song_data = self.datos_concurso.song_data
         song_data_2022 = song_data[(song_data.year == anio) & (song_data.final_place > 0.0)]
