@@ -1,5 +1,5 @@
 import pandas as pd
-from utilitarios import convertirDataframeColumnaObjectAFloat, convertirDataframeColumnaObjectAInt, convertirDataframeColumnaObjectAString
+from utilitarios import columna_2022, columna_2021, columna_2019, columna_2018, columna_2017, columna_2016, convertirDataframeColumnaObjectAFloat, convertirDataframeColumnaObjectAInt, convertirDataframeColumnaObjectAString, convertirDataframeColumnasObjectAFloat
 
 class DatosConcurso:
   def __init__(self):
@@ -55,6 +55,13 @@ class DatosJurado:
     self.jury_results_2021 = pd.read_csv("./csv_fuentes/resultados_finales/jurado/2021_jury_results.csv")
     self.jury_results_2022 = pd.read_csv("./csv_fuentes/resultados_finales/jurado/2022_jury_results.csv")
 
+    convertirDataframeColumnasObjectAFloat(self.jury_results_2022, columna_2022)
+    convertirDataframeColumnasObjectAFloat(self.jury_results_2021, columna_2021)
+    convertirDataframeColumnasObjectAFloat(self.jury_results_2019, columna_2019)
+    convertirDataframeColumnasObjectAFloat(self.jury_results_2018, columna_2018)
+    convertirDataframeColumnasObjectAFloat(self.jury_results_2017, columna_2017)
+    convertirDataframeColumnasObjectAFloat(self.jury_results_2016, columna_2016)
+
 class DatosTelevotacion:
   def __init__(self):
     self.televote_results_2016 = pd.read_csv("./csv_fuentes/resultados_finales/televotacion/2016_televote_results.csv")
@@ -63,6 +70,13 @@ class DatosTelevotacion:
     self.televote_results_2019 = pd.read_csv("./csv_fuentes/resultados_finales/televotacion/2019_televote_results.csv")
     self.televote_results_2021 = pd.read_csv("./csv_fuentes/resultados_finales/televotacion/2021_televote_results.csv")
     self.televote_results_2022 = pd.read_csv("./csv_fuentes/resultados_finales/televotacion/2022_televote_results.csv")
+
+    convertirDataframeColumnasObjectAFloat(self.televote_results_2022, columna_2022)
+    convertirDataframeColumnasObjectAFloat(self.televote_results_2021, columna_2021)
+    convertirDataframeColumnasObjectAFloat(self.televote_results_2019, columna_2019)
+    convertirDataframeColumnasObjectAFloat(self.televote_results_2018, columna_2018)
+    convertirDataframeColumnasObjectAFloat(self.televote_results_2017, columna_2017)
+    convertirDataframeColumnasObjectAFloat(self.televote_results_2016, columna_2016)
 
 class DatosEncuestas:
   def __init__(self) -> None:

@@ -1,49 +1,49 @@
-country,region
-Albania,Eastern Europe
-Latvia,Eastern Europe
-Lithuania,Eastern Europe
-Switzerland,Western Europe
-Slovenia,Eastern Europe
-Ukraine,Eastern Europe
-Bulgaria,Eastern Europe
-Netherlands,Western Europe
-Moldova,Eastern Europe
-Portugal,Western Europe
-Croatia,Eastern Europe
-Denmark,Scandanavia
-Austria,Eastern Europe
-Iceland,Scandanavia
-Greece,Eastern Europe
-Norway,Scandanavia
-Armenia,Eastern Europe
-Finland,Scandanavia
-Israel,Out of Europe
-Serbia,Eastern Europe
-Azerbaijan,Out of Europe
-Georgia,Out of Europe
-Malta,Western Europe
-San Marino,Western Europe
-Australia,Out of Europe
-Cyprus,Eastern Europe
-Ireland,Western Europe
-North Macedonia,Eastern Europe
-Estonia,Eastern Europe
-Romania,Eastern Europe
-Poland,Eastern Europe
-Montenegro,Eastern Europe
-Belgium,Western Europe
-Sweden,Scandanavia
-Czech Republic,Eastern Europe
-Italy,Western Europe
-Spain,Western Europe
-Germany,Western Europe
-United Kingdom,Western Europe
-France,Western Europe
-Russia,Eastern Europe
-Hungary,Eastern Europe
-Belarus,Eastern Europe
-Macedonia,Eastern Europe
-Bosnia and Herzegovina,Eastern Europe
-Turkey,Eastern Europe
-Slovakia,Eastern Europe
-Andorra,Western Europe
+CODE,country,region
+ALB,Albania,Eastern Europe
+LVA,Latvia,Eastern Europe
+LTU,Lithuania,Eastern Europe
+CHE,Switzerland,Western Europe
+SVN,Slovenia,Eastern Europe
+UKR,Ukraine,Eastern Europe
+BGR,Bulgaria,Eastern Europe
+NLD,Netherlands,Western Europe
+MDA,Moldova,Eastern Europe
+PRT,Portugal,Western Europe
+HRV,Croatia,Eastern Europe
+DNK,Denmark,Scandanavia
+AUT,Austria,Eastern Europe
+ISL,Iceland,Scandanavia
+GRC,Greece,Eastern Europe
+NOR,Norway,Scandanavia
+ARM,Armenia,Eastern Europe
+FIN,Finland,Scandanavia
+ISR,Israel,Out of Europe
+SRB,Serbia,Eastern Europe
+AZE,Azerbaijan,Out of Europe
+GEO,Georgia,Out of Europe
+MLT,Malta,Western Europe
+SMR,San Marino,Western Europe
+AUS,Australia,Out of Europe
+CYP,Cyprus,Eastern Europe
+IRL,Ireland,Western Europe
+MKD,North Macedonia,Eastern Europe
+EST,Estonia,Eastern Europe
+ROU,Romania,Eastern Europe
+POL,Poland,Eastern Europe
+MNE,Montenegro,Eastern Europe
+BEL,Belgium,Western Europe
+SWE,Sweden,Scandanavia
+CZE,Czech Republic,Eastern Europe
+ITA,Italy,Western Europe
+ESP,Spain,Western Europe
+DEU,Germany,Western Europe
+GBR,United Kingdom,Western Europe
+FRA,France,Western Europe
+RUS,Russia,Eastern Europe
+HUN,Hungary,Eastern Europe
+BLR,Belarus,Eastern Europe
+MKD,Macedonia,Eastern Europe
+BIH,Bosnia and Herzegovina,Eastern Europe
+TUR,Turkey,Eastern Europe
+SVK,Slovakia,Eastern Europe
+AND,Andorra,Western Europe
