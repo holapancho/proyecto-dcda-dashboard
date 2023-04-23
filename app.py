@@ -3,14 +3,16 @@ import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas as pd
 from diagramas import Plots
+from dash_bootstrap_templates import load_figure_template
 
+load_figure_template('SLATE')
 plots = Plots()
 
 anios_string = ['2022', '2021', '2019', '2018', '2017', '2016']
 anio_por_defecto = '2022'
 
 # temas disponibles en https://dash-bootstrap-components.opensource.faculty.ai/docs/themes/#available-themes
-app = Dash(external_stylesheets=[dbc.themes.SPACELAB])
+app = Dash(external_stylesheets=[dbc.themes.SLATE])
 
 app.layout = dbc.Container(
     children=[
@@ -81,7 +83,6 @@ def actualiza_bar_chart_resultados_finales_por_anio(value,relayoutData):
     Input('demo-dropdown', 'value')
 )
 def actualiza_mapa_resultados_finales_por_anio(value):
-    hiddenlabels = []
     if value == 'None':
         value = anio_por_defecto
     return plots.obtener_mapa_coropletico_resultados_finales_por_anio(value)
