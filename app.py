@@ -37,6 +37,12 @@ app.layout = dbc.Container(
             [
                 dbc.Col(dcc.Graph(id='grafico-2'), md=12)
             ]
+        ),
+        # Cuarto Registro 
+        dbc.Row(
+            [
+                dbc.Col(dcc.Graph(id='grafico-3'), md=12)
+            ]
         )
     ],
     fluid=True
@@ -69,6 +75,16 @@ def actualiza_bar_chart_resultados_finales_por_anio(value,relayoutData):
         if 'hiddenlabels' in relayoutData:
             hiddenlabels = relayoutData['hiddenlabels']
     return plots.obtener_bar_chart_resultados_finales_por_anio(value,hiddenlabels)
+
+@app.callback(
+    Output('grafico-3', 'figure'),
+    Input('demo-dropdown', 'value')
+)
+def actualiza_mapa_resultados_finales_por_anio(value):
+    hiddenlabels = []
+    if value == 'None':
+        value = anio_por_defecto
+    return plots.obtener_mapa_coropletico_resultados_finales_por_anio(value)
 
 if __name__ == '__main__':
     app.run_server(debug=True)
