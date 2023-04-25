@@ -95,6 +95,23 @@ class EuroJuly:
     self.eurojury_results_2021 = pd.read_csv("./csv_fuentes/encuestas/euro_july/2021_eurojury_results.csv")
     self.eurojury_results_2022 = pd.read_csv("./csv_fuentes/encuestas/euro_july/2022_eurojury_results.csv")
 
+    #asignacion temporal para iteracion
+    concurso_2016 = self.eurojury_results_2016
+    concurso_2017 = self.eurojury_results_2017
+    concurso_2018 = self.eurojury_results_2018
+    concurso_2019 = self.eurojury_results_2019
+    concurso_2021 = self.eurojury_results_2021
+    concurso_2022 = self.eurojury_results_2022
+
+    anios = [2016, 2017, 2018, 2019, 2021, 2022]
+    eurojuly_total = pd.DataFrame()
+    for anio in anios:
+        df_seleccionado = locals()['concurso_'+str(anio)]
+        df_seleccionado['Total'] = df_seleccionado['Online Points'] + df_seleccionado['Jury Points']
+        df_seleccionado['Año'] = anio
+        eurojuly_total = pd.concat([df_seleccionado, eurojuly_total])
+    self.eurojuly_total = eurojuly_total
+
 class EurovisionWorld:
   def __init__(self):
     self.eurovisionworld_results_2016 = pd.read_csv("./csv_fuentes/encuestas/eurovision_world/2016_eurovisionworld_results.csv")
@@ -103,6 +120,23 @@ class EurovisionWorld:
     self.eurovisionworld_results_2019 = pd.read_csv("./csv_fuentes/encuestas/eurovision_world/2019_eurovisionworld_results.csv")
     self.eurovisionworld_results_2021 = pd.read_csv("./csv_fuentes/encuestas/eurovision_world/2021_eurovisionworld_results.csv")
     self.eurovisionworld_results_2022 = pd.read_csv("./csv_fuentes/encuestas/eurovision_world/2022_eurovisionworld_results.csv")
+
+    #asignacion temporal para iteracion
+    concurso_2016 = self.eurovisionworld_results_2016
+    concurso_2017 = self.eurovisionworld_results_2017
+    concurso_2018 = self.eurovisionworld_results_2018
+    concurso_2019 = self.eurovisionworld_results_2019
+    concurso_2021 = self.eurovisionworld_results_2021
+    concurso_2022 = self.eurovisionworld_results_2022
+
+    eurovisionworld_total = pd.DataFrame()
+    anios = [2016, 2017, 2018, 2019, 2021, 2022]
+    for anio in anios:
+      df_seleccionado = locals()['concurso_'+str(anio)]
+      df_seleccionado['Año'] = anio
+      df_seleccionado['Total'] = df_seleccionado['Votes']
+      eurovisionworld_total = pd.concat([df_seleccionado, eurovisionworld_total])
+    self.eurovisionworld_total = eurovisionworld_total
 
 class MyEurovisionScore:
   def __init__(self):
@@ -113,6 +147,23 @@ class MyEurovisionScore:
     self.myeurovisionscoreboard_results_2021 = pd.read_csv("./csv_fuentes/encuestas/my_eurovision_score/2021_myeurovisionscoreboard_results.csv")
     self.myeurovisionscoreboard_results_2022 = pd.read_csv("./csv_fuentes/encuestas/my_eurovision_score/2022_myeurovisionscoreboard_results.csv")
 
+    #asignacion temporal para iteracion
+    concurso_2016 = self.myeurovisionscoreboard_results_2016
+    concurso_2017 = self.myeurovisionscoreboard_results_2017
+    concurso_2018 = self.myeurovisionscoreboard_results_2018
+    concurso_2019 = self.myeurovisionscoreboard_results_2019
+    concurso_2021 = self.myeurovisionscoreboard_results_2021
+    concurso_2022 = self.myeurovisionscoreboard_results_2022
+
+    myeurovisionscoreboard_total = pd.DataFrame()
+    anios = [2016, 2017, 2018, 2019, 2021, 2022]
+    for anio in anios:
+      df_seleccionado = locals()['concurso_'+str(anio)]
+      df_seleccionado['Año'] = anio
+      df_seleccionado['Total'] = df_seleccionado['Points']
+      myeurovisionscoreboard_total = pd.concat([df_seleccionado, myeurovisionscoreboard_total])
+    self.myeurovisionscoreboard_total = myeurovisionscoreboard_total
+
 class OGAE:
   def __init__(self):
     self.ogae_results_2016 = pd.read_csv("./csv_fuentes/encuestas/ogae/2016_ogae_results.csv")
@@ -122,9 +173,42 @@ class OGAE:
     self.ogae_results_2021 = pd.read_csv("./csv_fuentes/encuestas/ogae/2021_ogae_results.csv")
     self.ogae_results_2022 = pd.read_csv("./csv_fuentes/encuestas/ogae/2022_ogae_results.csv")
 
+    #asignacion temporal para iteracion
+    concurso_2016 = self.ogae_results_2016
+    concurso_2017 = self.ogae_results_2017
+    concurso_2018 = self.ogae_results_2018
+    concurso_2019 = self.ogae_results_2019
+    concurso_2021 = self.ogae_results_2021
+    concurso_2022 = self.ogae_results_2022
+
+    ogae_results_total = pd.DataFrame()
+    anios = [2016, 2017, 2018, 2019, 2021, 2022]
+    for anio in anios:
+      df_seleccionado = locals()['concurso_'+str(anio)]
+      df_seleccionado['Año'] = anio
+      df_seleccionado['Total'] = df_seleccionado['Points']
+      ogae_results_total = pd.concat([df_seleccionado, ogae_results_total])
+    self.ogae_results_total = ogae_results_total
+
+
 class Wiwibloggs:
   def __init__(self):
     self.wiwibloggs_results_2018 = pd.read_csv("./csv_fuentes/encuestas/wiwibloggs/2018_wiwibloggs_results.csv")
     self.wiwibloggs_results_2019 = pd.read_csv("./csv_fuentes/encuestas/wiwibloggs/2019_wiwibloggs_results.csv")
     self.wiwibloggs_results_2021 = pd.read_csv("./csv_fuentes/encuestas/wiwibloggs/2021_wiwibloggs_results.csv")
     self.wiwibloggs_results_2022 = pd.read_csv("./csv_fuentes/encuestas/wiwibloggs/2022_wiwibloggs_results.csv")
+
+    #asignacion temporal para iteracion
+    concurso_2018 = self.wiwibloggs_results_2018
+    concurso_2019 = self.wiwibloggs_results_2019
+    concurso_2021 = self.wiwibloggs_results_2021
+    concurso_2022 = self.wiwibloggs_results_2022
+
+    wiwibloggs_results_total = pd.DataFrame()
+    anios = [2018, 2019, 2021, 2022]
+    for anio in anios:
+      df_seleccionado = locals()['concurso_'+str(anio)]
+      df_seleccionado['Año'] = anio
+      df_seleccionado['Total'] = df_seleccionado['Votes']
+      wiwibloggs_results_total = pd.concat([df_seleccionado, wiwibloggs_results_total])
+    self.wiwibloggs_results_total = wiwibloggs_results_total

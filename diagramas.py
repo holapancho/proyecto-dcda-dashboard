@@ -7,6 +7,23 @@ import plotly.graph_objs as pg
 class Plots:
     def __init__(self):
         self.datos_concurso = DatosConcurso()
+        self.paises_ganadores = self.obtener_paises_ganadores_dict()
+
+    def obtener_paises_ganadores_por_anio_arreglo(self, anio):
+        song_data = self.datos_concurso.song_data
+        song_data_filtrado = song_data[(song_data.year == anio) & (song_data.final_place > 0.0)]
+        song_data_filtrado_top = song_data_filtrado.sort_values(by='final_place',ascending=True)
+        return song_data_filtrado_top.head(5).country.tolist()
+
+    def obtener_paises_ganadores_dict(self):
+        paises_ganadores_por_anio = {}
+        paises_ganadores_por_anio['2022'] = self.obtener_paises_ganadores_por_anio_arreglo(2022)
+        paises_ganadores_por_anio['2021'] = self.obtener_paises_ganadores_por_anio_arreglo(2021)
+        paises_ganadores_por_anio['2019'] = self.obtener_paises_ganadores_por_anio_arreglo(2019)
+        paises_ganadores_por_anio['2018'] = self.obtener_paises_ganadores_por_anio_arreglo(2018)
+        paises_ganadores_por_anio['2017'] = self.obtener_paises_ganadores_por_anio_arreglo(2017)
+        paises_ganadores_por_anio['2016'] = self.obtener_paises_ganadores_por_anio_arreglo(2016)
+        return paises_ganadores_por_anio
 
     def obtener_dataframe_res_finales_por_anio(self, anio_string):
         df = None
@@ -23,19 +40,19 @@ class Plots:
         elif anio_string == '2016':
             df = self.datos_concurso.datos_resultados_finales.datos_televotacion.televote_results_2016
         return df
-
+ 
     def obtener_pie_plot_por_anio(self, anio_string):
         anio = int(anio_string)
         song_data = self.datos_concurso.song_data
-        song_data_2022 = song_data[(song_data.year == anio) & (song_data.final_place > 0.0)]
-        song_data_2022_top = song_data_2022.sort_values(by='final_place',ascending=True)
-        fig = px.pie(song_data_2022_top, values='final_total_points', names='country', title='Paises de los artistas con mas votos el año {}'.format(anio))
+        song_data_filtrado = song_data[(song_data.year == anio) & (song_data.final_place > 0.0) & song_data.country.isin(self.paises_ganadores[anio_string])]
+        song_data_filtrado_top = song_data_filtrado.sort_values(by='final_place',ascending=True)
+        fig = px.pie(song_data_filtrado_top, values='final_total_points', names='country', title='Top 5 Paises de los Concursantes con mas votos en el año {}'.format(anio))
         fig.update_layout(transition_duration=500)
         return fig
     
     def obtener_bar_chart_resultados_finales_por_anio(self, anio_string, excluded_countries):
         df = self.obtener_dataframe_res_finales_por_anio(anio_string)
-        fig = px.bar(df.loc[~df['Contestant'].isin(excluded_countries)], x="Contestant", y=["Jury score", "Televoting score"], title="Puntos por concursante en el año {}".format(anio_string))
+        fig = px.bar(df.loc[~df['Contestant'].isin(excluded_countries) & df['Contestant'].isin(self.paises_ganadores[anio_string])], x="Contestant", y=["Jury score", "Televoting score"], title="Puntos por concursante en el año {}".format(anio_string))
         fig.update_layout(transition_duration=500)
         return fig
     
@@ -46,9 +63,43 @@ class Plots:
             locations = df_mezclado['CODE'], 
             z = df_mezclado['Total score'], 
             text = df_mezclado['Contestant'])
-        layout = dict(title = 'Global GDP - hammer projection',
+        layout = dict(title = 'Mapa Coropletico de todos los votos por Concursantes en el año {}'.format(anio_string),
                     geo = dict( projection = {'type':'hammer'},
                                 showlakes = True, 
                                 lakecolor = 'rgb(0,191,255)'))
         return pg.Figure(data = [data], 
                     layout = layout)
+    
+   
+    def obtener_df_por_encuesta(self, encuesta):
+        df = None
+        if encuesta == 'EuroJuly':
+            df = self.datos_concurso.datos_encuestas.euro_july.eurojuly_total
+        elif encuesta == 'EuroVision World':
+            df = self.datos_concurso.datos_encuestas.eurovision_world.eurovisionworld_total
+        elif encuesta == 'My Eurovision Score':
+            df = self.datos_concurso.datos_encuestas.my_eurovision_score.myeurovisionscoreboard_total
+        elif encuesta == 'OGAE':
+            df = self.datos_concurso.datos_encuestas.ogae.ogae_results_total
+        elif encuesta == 'WiwiBloggs':
+            df = self.datos_concurso.datos_encuestas.wiwibloggs.wiwibloggs_results_total
+        return df
+    
+
+    def obtener_serie_de_tiempo_por_anio(self, anio_string, encuesta):
+        df = self.obtener_df_por_encuesta(encuesta)
+
+        paises_top_5 = df.groupby(['Contestant']).sum().sort_values(by='Total')[-5:].index
+        df = pd.pivot_table(df[['Año', 'Contestant','Total']], index='Año', columns='Contestant', values='Total')
+        df_top5 = df[list(paises_top_5)]
+
+        fig = pg.Figure()
+        for col in df_top5.columns:
+            fig.add_trace(pg.Scatter(x=df_top5.index, y=df_top5[col], name=col))
+
+        fig.update_layout(
+            title='Series de tiempo evolutiva del TOP 5 de Paises con mayor cantidad de votos',
+            xaxis_title='Año',
+            yaxis_title='Cantidad de Votos'
+        )
+        return fig
