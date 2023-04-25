@@ -134,6 +134,7 @@ class EurovisionWorld:
     for anio in anios:
       df_seleccionado = locals()['concurso_'+str(anio)]
       df_seleccionado['Año'] = anio
+      df_seleccionado['Total'] = df_seleccionado['Votes']
       eurovisionworld_total = pd.concat([df_seleccionado, eurovisionworld_total])
     self.eurovisionworld_total = eurovisionworld_total
 
@@ -159,6 +160,7 @@ class MyEurovisionScore:
     for anio in anios:
       df_seleccionado = locals()['concurso_'+str(anio)]
       df_seleccionado['Año'] = anio
+      df_seleccionado['Total'] = df_seleccionado['Points']
       myeurovisionscoreboard_total = pd.concat([df_seleccionado, myeurovisionscoreboard_total])
     self.myeurovisionscoreboard_total = myeurovisionscoreboard_total
 
@@ -184,6 +186,7 @@ class OGAE:
     for anio in anios:
       df_seleccionado = locals()['concurso_'+str(anio)]
       df_seleccionado['Año'] = anio
+      df_seleccionado['Total'] = df_seleccionado['Points']
       ogae_results_total = pd.concat([df_seleccionado, ogae_results_total])
     self.ogae_results_total = ogae_results_total
 
@@ -206,5 +209,6 @@ class Wiwibloggs:
     for anio in anios:
       df_seleccionado = locals()['concurso_'+str(anio)]
       df_seleccionado['Año'] = anio
+      df_seleccionado['Total'] = df_seleccionado['Votes']
       wiwibloggs_results_total = pd.concat([df_seleccionado, wiwibloggs_results_total])
     self.wiwibloggs_results_total = wiwibloggs_results_total
