@@ -32,14 +32,21 @@ app.layout = dbc.Container(
             ],
                 md=2),
             dbc.Col(dcc.Graph(id='grafico-1'), md=6), #Pie chart
-            dbc.Col(dcc.Graph(id='grafico-3'), md=4) #Mapa coropletico
+            dbc.Col(dcc.Graph(id='grafico-3'), md=4) # Mapa coropletico
         ]),
 
       
         # Segundo Registro
         dbc.Row(
             [
-                dbc.Col(dcc.Graph(id='grafico-2'), md=12)
+                dbc.Col(dcc.Graph(id='grafico-2'), md=12) # bar chart
+            ]
+        ),
+
+        # Tercer Registro
+        dbc.Row(
+            [
+                dbc.Col(dcc.Graph(id='grafico-4'), md=12) # serie de tiempo
             ]
         ),
         
@@ -51,6 +58,7 @@ app.layout = dbc.Container(
 # The dcc.Graph component has four attributes that can change through user-interaction: hoverData, clickData, selectedData, relayoutData. These properties update when you hover over points, click on points, or select regions of points in a graph.
 
 
+#Pie chart
 @app.callback(
     Output('grafico-1', 'figure'),
     Input('demo-dropdown', 'value')
@@ -60,7 +68,7 @@ def actualiza_pie_plot_por_anio(value):
         value = anio_por_defecto
     return plots.obtener_pie_plot_por_anio(value)
 
-
+# bar chart
 @app.callback(
     Output('grafico-2', 'figure'),
     Input('demo-dropdown', 'value'),
@@ -78,7 +86,7 @@ def actualiza_bar_chart_resultados_finales_por_anio(value, relayoutData):
 
     return plots.obtener_bar_chart_resultados_finales_por_anio(value, hiddenlabels)
 
-
+#Mapa coropletico
 @app.callback(
     Output('grafico-3', 'figure'),
     Input('demo-dropdown', 'value')
@@ -88,6 +96,13 @@ def actualiza_mapa_resultados_finales_por_anio(value):
         value = anio_por_defecto
     return plots.obtener_mapa_coropletico_resultados_finales_por_anio(value)
 
+# serie de tiempo
+@app.callback(
+    Output('grafico-4', 'figure'),
+    Input('demo-dropdown', 'value')
+)
+def actualiza_serie_de_tiempo_por_anio(value):
+    return plots.obtener_serie_de_tiempo_por_anio(value)
 
 if __name__ == '__main__':
     app.run_server(debug=True)

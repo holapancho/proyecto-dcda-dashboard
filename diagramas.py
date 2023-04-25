@@ -71,5 +71,23 @@ class Plots:
         return pg.Figure(data = [data], 
                     layout = layout)
     
-        def obtener_serie_de_tiempo(self):
-            pass
+    def obtener_serie_de_tiempo_por_anio(self, anio_string):
+        df = self.datos_concurso.datos_encuestas.euro_july.eurojuly_total
+
+        print(df)
+
+        paises_top_5 = df.groupby(['Contestant']).sum().sort_values(by='Total')[5:].index
+        print(paises_top_5)
+        df = pd.pivot_table(df.drop(['Online Points','Jury Points'], axis=1), index='Año', columns='Contestant', values='Total')
+        df_top5 = df[list(paises_top_5)]
+
+        fig = pg.Figure()
+        for col in df_top5.columns:
+            fig.add_trace(pg.Scatter(x=df_top5.index, y=df_top5[col], name=col))
+
+        fig.update_layout(
+            title='Series de tiempo evolutiva del TOP 5 de Paises con mayor cantidad de votos',
+            xaxis_title='Año',
+            yaxis_title='Cantidad de Votos'
+        )
+        return fig
