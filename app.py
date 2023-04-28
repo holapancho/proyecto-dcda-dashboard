@@ -40,8 +40,9 @@ app.layout = dbc.Container(
                                       id='encuesta-dropdown'))
             ],
                 md=2),
-            dbc.Col(dcc.Graph(id='grafico-1'), md=6),  # Pie chart
-            dbc.Col(dcc.Graph(id='grafico-3'), md=4)  # Mapa coropletico
+            dbc.Col(dcc.Graph(id='grafico-1'), md=4),  # Pie chart
+            dbc.Col(dcc.Graph(id='grafico-5'), md=3),
+            dbc.Col(dcc.Graph(id='grafico-3'), md=3)  # Mapa coropletico
         ]),
 
 
@@ -91,8 +92,6 @@ def actualiza_bar_chart_resultados_finales_por_anio(value, relayoutData):
     return plots.obtener_bar_chart_resultados_finales_por_anio(value, hiddenlabels)
 
 # Mapa coropletico
-
-
 @ app.callback(
     Output('grafico-3', 'figure'),
     Input('anio-dropdown', 'value')
@@ -102,9 +101,7 @@ def actualiza_mapa_resultados_finales_por_anio(value):
         value = anio_por_defecto
     return plots.obtener_mapa_coropletico_resultados_finales_por_anio(value)
 
-# serie de tiempo
-
-
+# grafico 4: serie de tiempo
 @ app.callback(
     Output('grafico-4', 'figure'),
     Input('anio-dropdown', 'value'),
@@ -113,6 +110,13 @@ def actualiza_mapa_resultados_finales_por_anio(value):
 def actualiza_serie_de_tiempo_por_anio_y_encuesta(anio, encuesta):
     return plots.obtener_serie_de_tiempo_por_anio(anio, encuesta)
 
+# grafico 5: tabla
+@ app.callback(
+    Output('grafico-5', 'figure'),
+    Input('anio-dropdown', 'value')
+)
+def actualizar_tabla_por_anio(anio):
+    return plots.obtener_tabla_por_anio(anio) 
 
 if __name__ == '__main__':
     app.run_server(debug=True)
