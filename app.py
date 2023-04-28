@@ -25,7 +25,7 @@ app.layout = dbc.Container(
                 html.Div(html.Img(src='assets/dataset-cover.png',
                                   style={'height': '100px'})),
                 html.Div(
-                    html.H3("TOP 10 - Eurovision Song Contest Data Dashboard")),
+                    html.H3("TOP 5 - Eurovision Song Contest Data Dashboard")),
                 html.Div(html.P(
                     "El presente Dashboard muestra los datos del concurso Eurovision Song de los cuales...")),
                 html.Div(html.H5("Año")),
