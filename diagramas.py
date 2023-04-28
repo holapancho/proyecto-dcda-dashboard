@@ -110,6 +110,7 @@ class Plots:
         df_top5 = df[list(paises_top_5)]
 
         fig = pg.Figure()
+
         for col in df_top5.columns:
             fig.add_trace(pg.Scatter(x=df_top5.index,
                           y=df_top5[col], name=col))
@@ -124,12 +125,15 @@ class Plots:
     def obtener_tabla_por_anio(self, anio_string):
         song_data_table = self.filtrar_dataset(anio_string)
         fig = pg.Figure(data=[pg.Table(
-            header=dict(values=['final_place','country','artist_name','song_name'],
+            header=dict(values=['Posición','Pais','Artista','Canción'],
                         align='left'),
-            cells=dict(values=[song_data_table.year, 
+            cells=dict(values=[song_data_table.final_place, 
                                song_data_table.country,
                                song_data_table.artist_name,
                                song_data_table.song_name],
                        align='left'))
         ])
+        fig.update_layout(
+            title='Top 5 Canciones ganadoras al año {}'.format(anio_string)
+        )
         return fig
