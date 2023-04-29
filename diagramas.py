@@ -52,7 +52,11 @@ class Plots:
 
     def obtener_pie_plot_por_anio(self, anio_string):
         song_data_filtrado_top = self.filtrar_dataset(anio_string)
-        fig = px.pie(song_data_filtrado_top, values='final_total_points', names='country',
+        fig = px.pie(song_data_filtrado_top,
+                     values='final_total_points',
+                     names='country',
+                     labels={'country': "País",
+                             'final_total_points': 'Votos'},
                      title='Top 5 Paises de los Concursantes con mas votos en el año {}'.format(anio_string))
         fig.update_layout(transition_duration=500)
         return fig
@@ -66,8 +70,14 @@ class Plots:
 
     def obtener_bar_chart_resultados_finales_por_anio(self, anio_string, excluded_countries):
         df = self.obtener_dataframe_res_finales_por_anio(anio_string)
-        fig = px.bar(df.loc[~df['Contestant'].isin(excluded_countries) & df['Contestant'].isin(self.paises_ganadores[anio_string])], x="Contestant", y=[
-                     "Jury score", "Televoting score"], title="Puntos por concursante en el año {}".format(anio_string))
+        fig = px.bar(df.loc[~df['Contestant'].isin(excluded_countries) & df['Contestant'].isin(self.paises_ganadores[anio_string])],
+                     x="Contestant",
+                     y=["Jury score", "Televoting score"],
+                     labels={'variable': "Tipo de Voto",
+                             'final_total_points': 'Puntos Totales',
+                             'Contestant': 'País',
+                             'value':'Votos'},
+                     title="Puntos por concursante en el año {}".format(anio_string))
         fig.update_layout(transition_duration=500)
         return fig
 
@@ -80,9 +90,9 @@ class Plots:
                     z=df_mezclado['Total score'],
                     text=df_mezclado['Contestant'])
         layout = dict(title='Mapa Coropletico de votos por Concursantes',
-                      geo=dict(projection={'type': 'hammer'},
-                               showlakes=True,
-                               lakecolor='rgb(0,191,255)'))
+                      geo=dict(projection=pg.layout.geo.Projection(type='albers'),
+                               scope="europe",
+                               showlakes=True))
         return pg.Figure(data=[data],
                          layout=layout)
 
@@ -124,16 +134,21 @@ class Plots:
 
     def obtener_tabla_por_anio(self, anio_string, excluded_countries):
         song_data_table = self.filtrar_dataset(anio_string)
-        song_data_table = song_data_table.loc[~song_data_table['country'].isin(excluded_countries)]
+        song_data_table = song_data_table.loc[~song_data_table['country'].isin(
+            excluded_countries)]
         fig = pg.Figure(data=[pg.Table(
-            header=dict(values=['Posición','Pais','Artista','Canción','Votos'],
-                        align='left'),
-            cells=dict(values=[song_data_table.final_place, 
+            header=dict(values=['Posición', 'Pais', 'Artista', 'Canción', 'Votos'],
+                        align='left',
+                        fill_color='darkred',
+                        font_color="white"),
+            cells=dict(values=[song_data_table.final_place,
                                song_data_table.country,
                                song_data_table.artist_name,
                                song_data_table.song_name,
                                song_data_table.final_total_points],
-                       align='left'))
+                       align='left',
+                        fill_color='grey',
+                        font_color="white"))
         ])
         fig.update_layout(
             title='Top 5 Canciones ganadoras al año {}'.format(anio_string)
