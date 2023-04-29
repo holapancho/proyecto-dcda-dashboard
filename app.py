@@ -113,10 +113,18 @@ def actualiza_serie_de_tiempo_por_anio_y_encuesta(anio, encuesta):
 # grafico 5: tabla
 @ app.callback(
     Output('grafico-5', 'figure'),
-    Input('anio-dropdown', 'value')
+    Input('anio-dropdown', 'value'),
+    Input(component_id='grafico-1', component_property='relayoutData')
 )
-def actualizar_tabla_por_anio(anio):
-    return plots.obtener_tabla_por_anio(anio) 
+def actualizar_tabla_por_anio(anio, relayoutData):
+    hiddenlabels = []
+    if anio == 'None':
+        anio = anio_por_defecto
+
+    if isinstance(relayoutData, dict):
+        if 'hiddenlabels' in relayoutData:
+            hiddenlabels = relayoutData['hiddenlabels']
+    return plots.obtener_tabla_por_anio(anio, hiddenlabels) 
 
 if __name__ == '__main__':
     app.run_server(debug=True)

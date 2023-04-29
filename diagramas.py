@@ -79,7 +79,7 @@ class Plots:
                     locations=df_mezclado['CODE'],
                     z=df_mezclado['Total score'],
                     text=df_mezclado['Contestant'])
-        layout = dict(title='Mapa Coropletico de todos los votos por Concursantes en el año {}'.format(anio_string),
+        layout = dict(title='Mapa Coropletico de votos por Concursantes',
                       geo=dict(projection={'type': 'hammer'},
                                showlakes=True,
                                lakecolor='rgb(0,191,255)'))
@@ -122,15 +122,17 @@ class Plots:
         )
         return fig
 
-    def obtener_tabla_por_anio(self, anio_string):
+    def obtener_tabla_por_anio(self, anio_string, excluded_countries):
         song_data_table = self.filtrar_dataset(anio_string)
+        song_data_table = song_data_table.loc[~song_data_table['country'].isin(excluded_countries)]
         fig = pg.Figure(data=[pg.Table(
-            header=dict(values=['Posición','Pais','Artista','Canción'],
+            header=dict(values=['Posición','Pais','Artista','Canción','Votos'],
                         align='left'),
             cells=dict(values=[song_data_table.final_place, 
                                song_data_table.country,
                                song_data_table.artist_name,
-                               song_data_table.song_name],
+                               song_data_table.song_name,
+                               song_data_table.final_total_points],
                        align='left'))
         ])
         fig.update_layout(
