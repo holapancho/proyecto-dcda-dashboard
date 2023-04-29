@@ -58,6 +58,7 @@ class Plots:
                      labels={'country': "País",
                              'final_total_points': 'Votos'},
                      title='Top 5 Paises de los Concursantes con mas votos en el año {}'.format(anio_string))
+        fig.update_layout(legend = dict(font = dict( size = 18)))
         fig.update_layout(transition_duration=500)
         return fig
 
