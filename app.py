@@ -25,9 +25,9 @@ app.layout = dbc.Container(
                 html.Div(html.Img(src='assets/dataset-cover.png',
                                   style={'height': '100px'})),
                 html.Div(
-                    html.H3("TOP 5 - Eurovision Song Contest Data Dashboard")),
+                    html.H4("TOP 5 - Eurovision Song Contest Data Dashboard")),
                 html.Div(html.P(
-                    "El presente Dashboard muestra los datos del concurso Eurovision Song de los cuales...")),
+                    "El presente Dashboard muestra los datos del concurso Eurovision Song de los cuales..."),style={'font-size': '13px'}),
                 html.Div(html.H5("Año")),
                 html.Div(dcc.Dropdown(options=anios_string,
                                       value=anio_por_defecto,
@@ -39,18 +39,18 @@ app.layout = dbc.Container(
                                       clearable=False,
                                       id='encuesta-dropdown'))
             ],
-                md=2),
-            dbc.Col(dcc.Graph(id='grafico-1'), md=4),  # Pie chart
-            dbc.Col(dcc.Graph(id='grafico-5'), md=3),
-            dbc.Col(dcc.Graph(id='grafico-3'), md=3)  # Mapa coropletico
+                sm=2),
+            dbc.Col(dcc.Graph(id='grafico-1'), sm=4),  # Pie chart
+            dbc.Col(dcc.Graph(id='grafico-5'), sm=3),
+            dbc.Col(dcc.Graph(id='grafico-3'), sm=3)  # Mapa coropletico
         ]),
 
 
         # Segundo Registro
         dbc.Row(
             [
-                dbc.Col(dcc.Graph(id='grafico-4'), md=6),  # serie de tiempo
-                dbc.Col(dcc.Graph(id='grafico-2'), md=6)  # bar chart
+                dbc.Col(dcc.Graph(id='grafico-4'), sm=6),  # serie de tiempo
+                dbc.Col(dcc.Graph(id='grafico-2'), sm=6)  # bar chart
             ]
         ),
 
@@ -94,12 +94,19 @@ def actualiza_bar_chart_resultados_finales_por_anio(value, relayoutData):
 # Mapa coropletico
 @ app.callback(
     Output('grafico-3', 'figure'),
-    Input('anio-dropdown', 'value')
+    Input('anio-dropdown', 'value'),
+    Input(component_id='grafico-1', component_property='relayoutData')
 )
-def actualiza_mapa_resultados_finales_por_anio(value):
+def actualiza_mapa_resultados_finales_por_anio(value, relayoutData):
+    hiddenlabels = []
     if value == 'None':
         value = anio_por_defecto
-    return plots.obtener_mapa_coropletico_resultados_finales_por_anio(value)
+
+    if isinstance(relayoutData, dict):
+        if 'hiddenlabels' in relayoutData:
+            hiddenlabels = relayoutData['hiddenlabels']
+
+    return plots.obtener_mapa_coropletico_resultados_finales_por_anio(value, hiddenlabels)
 
 # grafico 4: serie de tiempo
 @ app.callback(

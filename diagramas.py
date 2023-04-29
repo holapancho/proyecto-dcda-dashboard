@@ -81,15 +81,16 @@ class Plots:
         fig.update_layout(transition_duration=500)
         return fig
 
-    def obtener_mapa_coropletico_resultados_finales_por_anio(self, anio_string):
+    def obtener_mapa_coropletico_resultados_finales_por_anio(self, anio_string, excluded_countries):
         df = self.obtener_dataframe_res_finales_por_anio(anio_string)
         df_mezclado = pd.merge(df, self.datos_concurso.country_data, how='left',
                                left_on='Contestant', right_on='country')[['Contestant', 'Total score', 'CODE']]
+        df_mezclado = df_mezclado.loc[~df['Contestant'].isin(excluded_countries) & df['Contestant'].isin(self.paises_ganadores[anio_string])]
         data = dict(type='choropleth',
                     locations=df_mezclado['CODE'],
                     z=df_mezclado['Total score'],
                     text=df_mezclado['Contestant'])
-        layout = dict(title='Mapa Coropletico de votos por Concursantes',
+        layout = dict(title='Mapa Coropletico de Votos Totales por Paises Concursantes',
                       geo=dict(projection=pg.layout.geo.Projection(type='albers'),
                                scope="europe",
                                showlakes=True))
