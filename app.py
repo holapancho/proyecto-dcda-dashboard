@@ -25,9 +25,10 @@ app.layout = dbc.Container(
                 html.Div(html.Img(src='assets/dataset-cover.png',
                                   style={'height': '100px'})),
                 html.Div(
-                    html.H4("TOP 5 - Eurovision Song Contest Data Dashboard")),
+                    html.H5("TOP 5 - Eurovision Song Contest Data Dashboard")),
                 html.Div(html.P(
-                    "El presente Dashboard muestra los datos del concurso Eurovision Song de los cuales..."),style={'font-size': '13px'}),
+                    "Cabe destacar que existen 2 tipos de votos, el del jurado especializado y el de los televidentes, representando cada uno un 50% del puntaje total de cada concursante."+
+                    "Existen 2 tipos de votos, el del jurado y el de los televidentes, representando cada uno un 50% del puntaje total de cada concursante."), style={'font-size': '12px'}),
                 html.Div(html.H5("Año")),
                 html.Div(dcc.Dropdown(options=anios_string,
                                       value=anio_por_defecto,
@@ -49,8 +50,10 @@ app.layout = dbc.Container(
         # Segundo Registro
         dbc.Row(
             [
-                dbc.Col(dcc.Graph(id='grafico-4'), sm=6),  # serie de tiempo
-                dbc.Col(dcc.Graph(id='grafico-2'), sm=6)  # bar chart
+
+                dbc.Col(dcc.Graph(id='grafico-6'), sm=4),  # heat chart
+                dbc.Col(dcc.Graph(id='grafico-4'), sm=4),  # serie de tiempo
+                dbc.Col(dcc.Graph(id='grafico-2'), sm=4)  # bar chart
             ]
         ),
 
@@ -92,6 +95,8 @@ def actualiza_bar_chart_resultados_finales_por_anio(value, relayoutData):
     return plots.obtener_bar_chart_resultados_finales_por_anio(value, hiddenlabels)
 
 # Mapa coropletico
+
+
 @ app.callback(
     Output('grafico-3', 'figure'),
     Input('anio-dropdown', 'value'),
@@ -109,6 +114,8 @@ def actualiza_mapa_resultados_finales_por_anio(value, relayoutData):
     return plots.obtener_mapa_coropletico_resultados_finales_por_anio(value, hiddenlabels)
 
 # grafico 4: serie de tiempo
+
+
 @ app.callback(
     Output('grafico-4', 'figure'),
     Input('anio-dropdown', 'value'),
@@ -118,6 +125,8 @@ def actualiza_serie_de_tiempo_por_anio_y_encuesta(anio, encuesta):
     return plots.obtener_serie_de_tiempo_por_anio(anio, encuesta)
 
 # grafico 5: tabla
+
+
 @ app.callback(
     Output('grafico-5', 'figure'),
     Input('anio-dropdown', 'value'),
@@ -131,7 +140,16 @@ def actualizar_tabla_por_anio(anio, relayoutData):
     if isinstance(relayoutData, dict):
         if 'hiddenlabels' in relayoutData:
             hiddenlabels = relayoutData['hiddenlabels']
-    return plots.obtener_tabla_por_anio(anio, hiddenlabels) 
+    return plots.obtener_tabla_por_anio(anio, hiddenlabels)
+
+# grafico 5: heat map
+@ app.callback(
+    Output('grafico-6', 'figure'),
+    Input('anio-dropdown', 'value')
+)
+def actualiza_heatmap_por_anio(anio):
+    return plots.obtener_heatmap_por_anio(anio)
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)
